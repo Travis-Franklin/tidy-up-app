@@ -22,7 +22,34 @@ const parseForm = bodyParser.urlencoded({
     extended: true
 });
 
-const { stuff } = require('./models');
+app.get('/signup', (req, res) => {
+    res.render('user-auth');
+})
+
+app.post('/signup', parseForm, (req, res) => {
+    console.log(req.body);
+    const { username, password} = req.body;
+    users.create(username, password);
+    res.redirect('/login');
+    
+})
+
+app.get('/login', (req, res) => {
+    res.render('user-auth');
+})
+
+app.post('/login', parseForm, (req, res) => {
+    const { username, password } = req.body;
+    const didLogin = users.login(username, password);
+    console.log(didLogin);
+})
+
+
+
+const { 
+    stuff,
+    users 
+} = require('./models');
 
 
 app.get( '/', (req, res) => {
@@ -34,7 +61,6 @@ app.get('/create', (req, res) => {
     console.log(stuff.all());
     res.render('form');
 })
-
 
 app.post('/create', parseForm, (req, res) => {
     console.log('A post.');

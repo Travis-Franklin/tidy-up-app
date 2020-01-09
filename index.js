@@ -31,7 +31,6 @@ app.post('/signup', parseForm, (req, res) => {
     const { username, password} = req.body;
     users.create(username, password);
     res.redirect('/login');
-    
 })
 
 app.get('/login', (req, res) => {
